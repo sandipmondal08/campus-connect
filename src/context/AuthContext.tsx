@@ -21,14 +21,18 @@ interface RegisterData {
   hostel?: string;
 }
 
-const MOCK_USERS: User[] = [
-  { id: 'admin-1', name: 'Dr. Principal Admin', email: 'admin@college.edu', role: 'admin', department: 'Administration' },
-  { id: 'team-1', name: 'Rajesh Kumar', email: 'rajesh@college.edu', role: 'team', department: 'Maintenance' },
-  { id: 'team-2', name: 'Priya Sharma', email: 'priya@college.edu', role: 'team', department: 'IT Support' },
-  { id: 'team-3', name: 'Suresh Patel', email: 'suresh@college.edu', role: 'team', department: 'Hostel Management' },
-  { id: 'user-1', name: 'Amit Singh', email: 'amit@student.edu', role: 'student', department: 'Computer Science', hostel: 'Block A' },
-  { id: 'user-2', name: 'Dr. Meena Gupta', email: 'meena@faculty.edu', role: 'faculty', department: 'Electronics' },
-  { id: 'user-3', name: 'Riya Verma', email: 'riya@student.edu', role: 'student', department: 'Mechanical', hostel: 'Block B' },
+interface UserWithPassword extends User {
+  password: string;
+}
+
+const MOCK_USERS: UserWithPassword[] = [
+  { id: 'admin-1', name: 'Sandip Mondal', email: 'sandipmondal2506@gmail.com', role: 'admin', department: 'Administration', password: 'Sandip@123' },
+  { id: 'team-1', name: 'Rajesh Kumar', email: 'rajesh@college.edu', role: 'team', department: 'Maintenance', password: 'Team@123' },
+  { id: 'team-2', name: 'Priya Sharma', email: 'priya@college.edu', role: 'team', department: 'IT Support', password: 'Team@123' },
+  { id: 'team-3', name: 'Suresh Patel', email: 'suresh@college.edu', role: 'team', department: 'Hostel Management', password: 'Team@123' },
+  { id: 'user-1', name: 'Amit Singh', email: 'amit@student.edu', role: 'student', department: 'Computer Science', hostel: 'Block A', password: 'Student@123' },
+  { id: 'user-2', name: 'Dr. Meena Gupta', email: 'meena@faculty.edu', role: 'faculty', department: 'Electronics', password: 'Faculty@123' },
+  { id: 'user-3', name: 'Riya Verma', email: 'riya@student.edu', role: 'student', department: 'Mechanical', hostel: 'Block B', password: 'Student@123' },
 ];
 
 const AuthContext = createContext<AuthContextType | null>(null);
