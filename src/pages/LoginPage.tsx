@@ -33,9 +33,6 @@ const LoginPage = () => {
     const success = login(email, password);
     if (success) {
       toast.success('Login successful!');
-      // navigate based on role is handled in App via redirects
-      // for now just navigate to dashboard
-      const user = JSON.parse(JSON.stringify(success));
       navigate('/dashboard');
     } else {
       toast.error('Invalid credentials or account blocked.');
