@@ -40,11 +40,13 @@ const LoginPage = () => {
   };
 
   // Quick login helpers for demo
-  const demoLogin = (email: string) => {
-    const success = login(email, 'demo');
+  const demoLogin = (email: string, password: string) => {
+    const success = login(email, password);
     if (success) {
       toast.success('Logged in!');
       navigate('/dashboard');
+    } else {
+      toast.error('Login failed');
     }
   };
 
@@ -112,10 +114,10 @@ const LoginPage = () => {
           <div className="mt-6 p-4 rounded-xl bg-muted/50 border">
             <p className="text-xs font-medium text-muted-foreground mb-3">Quick Demo Login (no captcha needed):</p>
             <div className="flex flex-wrap gap-2">
-              <Button size="sm" variant="outline" onClick={() => demoLogin('amit@student.edu')}>Student</Button>
-              <Button size="sm" variant="outline" onClick={() => demoLogin('meena@faculty.edu')}>Faculty</Button>
-              <Button size="sm" variant="outline" onClick={() => demoLogin('admin@college.edu')}>Admin</Button>
-              <Button size="sm" variant="outline" onClick={() => demoLogin('rajesh@college.edu')}>Team</Button>
+              <Button size="sm" variant="outline" onClick={() => demoLogin('amit@student.edu', 'Student@123')}>Student</Button>
+              <Button size="sm" variant="outline" onClick={() => demoLogin('meena@faculty.edu', 'Faculty@123')}>Faculty</Button>
+              <Button size="sm" variant="outline" onClick={() => demoLogin('sandipmondal2506@gmail.com', 'Sandip@123')}>Admin</Button>
+              <Button size="sm" variant="outline" onClick={() => demoLogin('rajesh@college.edu', 'Team@123')}>Team</Button>
             </div>
           </div>
 
