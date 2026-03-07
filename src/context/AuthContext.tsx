@@ -9,6 +9,7 @@ interface AuthContextType {
   allUsers: User[];
   deleteUser: (id: string) => void;
   blockUser: (id: string) => void;
+  resetUserPassword: (userId: string, newPassword: string) => void;
 }
 
 interface RegisterData {
