@@ -13,7 +13,18 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ['Plus Jakarta Sans', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
       colors: {
+        "status-pending": "hsl(var(--status-pending))",
+        "status-assigned": "hsl(var(--status-assigned))",
+        "status-in-progress": "hsl(var(--status-in-progress))",
+        "status-resolved": "hsl(var(--status-resolved))",
+        "status-rejected": "hsl(var(--status-rejected))",
+        "student-tag": "hsl(var(--student-tag))",
+        "faculty-tag": "hsl(var(--faculty-tag))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

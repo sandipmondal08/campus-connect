@@ -1,0 +1,155 @@
+import { useState } from 'react';
+import { useComplaints } from '@/context/ComplaintContext';
+import DashboardLayout from '@/components/DashboardLayout';
+import StatsCard from '@/components/StatsCard';
+import StatusBadge from '@/components/StatusBadge';
+import RoleBadge from '@/components/RoleBadge';
+import { FileText, Clock, CheckCircle, XCircle, Users, AlertTriangle } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+
+const COLORS = ['#eab308', '#3b82f6', '#f97316', '#22c55e', '#ef4444'];
+
+const AdminDashboard = () => {
+  const { complaints, teams, assignTeam } = useComplaints();
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState({ status: 'all', category: 'all', role: 'all' });
+
+  const total = complaints.length;
+  const pending = complaints.filter((c) => c.status === 'pending').length;
+  const resolved = complaints.filter((c) => c.status === 'resolved').length;
+  const rejected = complaints.filter((c) => c.status === 'rejected').length;
+
+  const statusData = [
+    { name: 'Pending', value: complaints.filter((c) => c.status === 'pending').length },
+    { name: 'Assigned', value: complaints.filter((c) => c.status === 'assigned').length },
+    { name: 'In Progress', value: complaints.filter((c) => c.status === 'in-progress').length },
+    { name: 'Resolved', value: complaints.filter((c) => c.status === 'resolved').length },
+    { name: 'Rejected', value: complaints.filter((c) => c.status === 'rejected').length },
+  ];
+
+  const categoryData = [
+    { name: 'College', student: complaints.filter((c) => c.category === 'college' && c.userRole === 'student').length, faculty: complaints.filter((c) => c.category === 'college' && c.userRole === 'faculty').length },
+    { name: 'Hostel', student: complaints.filter((c) => c.category === 'hostel' && c.userRole === 'student').length, faculty: complaints.filter((c) => c.category === 'hostel' && c.userRole === 'faculty').length },
+    { name: 'Mess/Security', student: complaints.filter((c) => c.category === 'mess-security' && c.userRole === 'student').length, faculty: complaints.filter((c) => c.category === 'mess-security' && c.userRole === 'faculty').length },
+  ];
+
+  const filtered = complaints.filter((c) => {
+    if (filter.status !== 'all' && c.status !== filter.status) return false;
+    if (filter.category !== 'all' && c.category !== filter.category) return false;
+    if (filter.role !== 'all' && c.userRole !== filter.role) return false;
+    return true;
+  });
+
+  const handleAssign = (complaintId: string, teamId: string) => {
+    assignTeam(complaintId, teamId);
+    toast.success('Team assigned successfully!');
+  };
+
+  return (
+    <DashboardLayout title="Admin Dashboard">
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatsCard title="Total Complaints" value={total} icon={FileText} color="primary" />
+          <StatsCard title="Pending" value={pending} icon={Clock} color="pending" />
+          <StatsCard title="Resolved" value={resolved} icon={CheckCircle} color="resolved" />
+          <StatsCard title="Rejected" value={rejected} icon={XCircle} color="rejected" />
+        </div>
+
+        {/* Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-card rounded-xl shadow-card p-6">
+            <h3 className="font-display font-semibold text-card-foreground mb-4">Status Distribution</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie data={statusData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} paddingAngle={4} dataKey="value" label={({ name, value }) => `${name}: ${value}`}>
+                  {statusData.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="bg-card rounded-xl shadow-card p-6">
+            <h3 className="font-display font-semibold text-card-foreground mb-4">Category Breakdown</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={categoryData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="student" name="Students" fill="hsl(221, 83%, 53%)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="faculty" name="Faculty" fill="hsl(271, 81%, 56%)" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Filters & complaints list */}
+        <div className="bg-card rounded-xl shadow-card">
+          <div className="p-4 md:p-6 border-b">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="font-display font-semibold text-card-foreground mr-auto">All Complaints</h3>
+              <Select value={filter.status} onValueChange={(v) => setFilter((f) => ({ ...f, status: v }))}>
+                <SelectTrigger className="w-[140px]"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="assigned">Assigned</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
+                  <SelectItem value="resolved">Resolved</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={filter.category} onValueChange={(v) => setFilter((f) => ({ ...f, category: v }))}>
+                <SelectTrigger className="w-[140px]"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="college">College</SelectItem>
+                  <SelectItem value="hostel">Hostel</SelectItem>
+                  <SelectItem value="mess-security">Mess/Security</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={filter.role} onValueChange={(v) => setFilter((f) => ({ ...f, role: v }))}>
+                <SelectTrigger className="w-[130px]"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Roles</SelectItem>
+                  <SelectItem value="student">Student</SelectItem>
+                  <SelectItem value="faculty">Faculty</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="divide-y">
+            {filtered.map((c) => (
+              <div key={c.id} className="p-4 md:px-6 flex items-center gap-4 hover:bg-muted/30 transition-colors">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-mono text-muted-foreground">{c.id}</span>
+                    <RoleBadge role={c.userRole} />
+                    <StatusBadge status={c.status} size="sm" />
+                  </div>
+                  <p className="font-medium text-card-foreground truncate cursor-pointer hover:text-primary" onClick={() => navigate(`/complaint/${c.id}`)}>{c.title}</p>
+                  <p className="text-xs text-muted-foreground capitalize">{c.userName} • {c.category} • {new Date(c.createdAt).toLocaleDateString()}</p>
+                </div>
+                {c.status === 'pending' && (
+                  <Select onValueChange={(teamId) => handleAssign(c.id, teamId)}>
+                    <SelectTrigger className="w-[160px]"><SelectValue placeholder="Assign team" /></SelectTrigger>
+                    <SelectContent>
+                      {teams.map((t) => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+};
+
+export default AdminDashboard;
