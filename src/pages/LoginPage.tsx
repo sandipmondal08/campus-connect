@@ -40,7 +40,6 @@ const LoginPage = () => {
   };
 
   // Quick login helpers for demo
-  const demoLogin = (email: string) => {
   const demoLogin = (email: string, password: string) => {
     const success = login(email, password);
     if (success) {
