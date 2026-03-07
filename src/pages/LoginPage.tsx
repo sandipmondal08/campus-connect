@@ -41,10 +41,13 @@ const LoginPage = () => {
 
   // Quick login helpers for demo
   const demoLogin = (email: string) => {
-    const success = login(email, 'demo');
+  const demoLogin = (email: string, password: string) => {
+    const success = login(email, password);
     if (success) {
       toast.success('Logged in!');
       navigate('/dashboard');
+    } else {
+      toast.error('Login failed');
     }
   };
 
