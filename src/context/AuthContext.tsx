@@ -45,10 +45,10 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[]>(MOCK_USERS);
+  const [users, setUsers] = useState<UserWithPassword[]>(MOCK_USERS);
 
-  const login = useCallback((email: string, _password: string) => {
-    const found = users.find((u) => u.email === email && !u.blocked);
+  const login = useCallback((email: string, password: string) => {
+    const found = users.find((u) => u.email === email && u.password === password && !u.blocked);
     if (found) {
       setUser(found);
       return true;
