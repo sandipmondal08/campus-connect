@@ -58,13 +58,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = useCallback((data: RegisterData) => {
     if (users.find((u) => u.email === data.email)) return false;
-    const newUser: User = {
+    const newUser: UserWithPassword = {
       id: `user-${Date.now()}`,
       name: data.name,
       email: data.email,
       role: data.role,
       department: data.department,
       hostel: data.hostel,
+      password: data.password,
     };
     setUsers((prev) => [...prev, newUser]);
     setUser(newUser);
@@ -74,9 +75,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = useCallback(() => setUser(null), []);
   const deleteUser = useCallback((id: string) => setUsers((prev) => prev.filter((u) => u.id !== id)), []);
   const blockUser = useCallback((id: string) => setUsers((prev) => prev.map((u) => u.id === id ? { ...u, blocked: !u.blocked } : u)), []);
+  const resetUserPassword = useCallback((userId: string, newPassword: string) => {
+    setUsers((prev) => prev.map((u) => u.id === userId ? { ...u, password: newPassword } : u));
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, allUsers: users, deleteUser, blockUser }}>
+    <AuthContext.Provider value={{ user, login, register, logout, allUsers: users, deleteUser, blockUser, resetUserPassword }}>
       {children}
     </AuthContext.Provider>
   );
