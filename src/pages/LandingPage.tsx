@@ -41,7 +41,7 @@ const LandingPage = () => {
               <Shield className="h-4 w-4" /> Trusted by 1000+ Students
             </span>
             <h1 className="text-4xl md:text-6xl font-display font-extrabold text-foreground leading-tight mb-6">
-              College Complaint<br />
+              Complaint<br />
               <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-hero)' }}>
                 Management System
               </span>
