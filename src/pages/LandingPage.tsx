@@ -22,8 +22,8 @@ const LandingPage = () => {
             <FileText className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="font-display font-bold text-foreground">CCMS</h1>
-            <p className="text-[10px] text-muted-foreground">College Complaint System</p>
+            <h1 className="font-display font-bold text-foreground">CMS</h1>
+            <p className="text-[10px] text-muted-foreground">Complaint Management System</p>
           </div>
         </div>
         <div className="flex gap-3">
@@ -41,7 +41,7 @@ const LandingPage = () => {
               <Shield className="h-4 w-4" /> Trusted by 1000+ Students
             </span>
             <h1 className="text-4xl md:text-6xl font-display font-extrabold text-foreground leading-tight mb-6">
-              College Complaint<br />
+              Complaint<br />
               <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-hero)' }}>
                 Management System
               </span>
@@ -107,7 +107,7 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="bg-card border-t py-8 text-center text-sm text-muted-foreground">
-        <p>© 2026 College Complaint Management System. All rights reserved.</p>
+        <p>© 2026 Complaint Management System. All rights reserved.</p>
       </footer>
     </div>
   );

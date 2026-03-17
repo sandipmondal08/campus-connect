@@ -60,7 +60,7 @@ const RegisterPage = () => {
       <div className="hidden lg:flex lg:w-1/2 gradient-hero relative items-center justify-center p-12">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
           <FileText className="h-20 w-20 text-primary-foreground mx-auto mb-6" />
-          <h1 className="text-4xl font-display font-extrabold text-primary-foreground mb-4">Join CCMS</h1>
+          <h1 className="text-4xl font-display font-extrabold text-primary-foreground mb-4">Join CMS</h1>
           <p className="text-primary-foreground/80 text-lg max-w-md">Create your account to submit and track complaints efficiently.</p>
         </motion.div>
       </div>
