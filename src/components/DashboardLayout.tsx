@@ -63,7 +63,7 @@ function SidebarInner() {
           </div>
           {!collapsed && (
             <div>
-              <h2 className="font-display font-bold text-sidebar-foreground text-sm">CCMS</h2>
+              <h2 className="font-display font-bold text-sidebar-foreground text-sm">CMS</h2>
               <p className="text-[10px] text-sidebar-foreground/60">Complaint Portal</p>
             </div>
           )}

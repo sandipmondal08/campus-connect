@@ -72,7 +72,7 @@ const LoginPage = () => {
             <div className="h-10 w-10 rounded-xl gradient-hero flex items-center justify-center">
               <FileText className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-display font-bold text-xl text-foreground">CCMS</span>
+            <span className="font-display font-bold text-xl text-foreground">CMS</span>
           </div>
 
           <h2 className="text-2xl font-display font-bold text-foreground mb-1">Sign in</h2>
