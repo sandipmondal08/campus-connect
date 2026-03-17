@@ -34,6 +34,7 @@ const NewComplaint = () => {
       category: form.category as ComplaintCategory,
       subcategory: form.subcategory,
       location: form.location,
+      imageUrl: attachment ? URL.createObjectURL(attachment) : undefined,
     });
     toast.success('Complaint submitted successfully!');
     navigate('/my-complaints');
