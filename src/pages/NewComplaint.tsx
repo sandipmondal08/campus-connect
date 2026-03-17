@@ -80,6 +80,29 @@ const NewComplaint = () => {
               <Label>Location / Block / Department</Label>
               <Input value={form.location} onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))} placeholder="e.g., Building A, Room 201" required />
             </div>
+            <div>
+              <Label>Attachment <span className="text-muted-foreground font-normal">(optional)</span></Label>
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={(e) => setAttachment(e.target.files?.[0] || null)}
+              />
+              {attachment ? (
+                <div className="flex items-center gap-3 p-3 rounded-lg border border-input bg-muted/50">
+                  <Upload className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <span className="text-sm text-foreground truncate flex-1">{attachment.name}</span>
+                  <span className="text-xs text-muted-foreground">{(attachment.size / 1024).toFixed(1)} KB</span>
+                  <Button type="button" variant="ghost" size="icon" className="h-6 w-6" onClick={() => { setAttachment(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <Button type="button" variant="outline" className="w-full justify-start gap-2 text-muted-foreground" onClick={() => fileInputRef.current?.click()}>
+                  <Upload className="h-4 w-4" /> Choose file (image, PDF, document, etc.)
+                </Button>
+              )}
+            </div>
             <div className="flex gap-3 pt-2">
               <Button type="submit" className="gradient-hero border-0 flex-1">Submit Complaint</Button>
               <Button type="button" variant="outline" onClick={() => navigate(-1)}>Cancel</Button>

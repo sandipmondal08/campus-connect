@@ -107,7 +107,7 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="bg-card border-t py-8 text-center text-sm text-muted-foreground">
-        <p>© 2026 College Complaint Management System. All rights reserved.</p>
+        <p>© 2026 Complaint Management System. All rights reserved.</p>
       </footer>
     </div>
   );
