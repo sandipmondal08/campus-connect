@@ -114,11 +114,10 @@ const LoginPage = () => {
           <div className="mt-6 p-4 rounded-xl bg-muted/50 border">
             <p className="text-xs font-medium text-muted-foreground mb-3">Quick Demo Login (no captcha needed):</p>
             <div className="flex flex-wrap gap-2">
-              <Button size="sm" variant="outline" onClick={() => demoLogin('amit@student.edu', 'Student@123')}>Student</Button>
-              <Button size="sm" variant="outline" onClick={() => demoLogin('meena@faculty.edu', 'Faculty@123')}>Faculty</Button>
               <Button size="sm" variant="outline" onClick={() => demoLogin('sandipmondal2506@gmail.com', 'Sandip@123')}>Admin</Button>
-              <Button size="sm" variant="outline" onClick={() => demoLogin('rajesh@college.edu', 'Team@123')}>Team</Button>
+              <Button size="sm" variant="outline" onClick={() => demoLogin('rajesh@college.edu', 'Team@123')}>Team Member</Button>
             </div>
+            <p className="text-[11px] text-muted-foreground mt-2">Register a new account to test as Student/Faculty</p>
           </div>
 
           <p className="text-sm text-muted-foreground text-center mt-6">

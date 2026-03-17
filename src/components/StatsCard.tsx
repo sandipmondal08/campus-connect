@@ -22,18 +22,18 @@ const StatsCard = ({ title, value, icon: Icon, trend, color = 'primary' }: Stats
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-card rounded-xl p-6 shadow-card hover:shadow-card-hover transition-shadow"
+      className="bg-card rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all group"
     >
-      <div className="flex items-center justify-between mb-4">
-        <div className={`${colorMap[color] || colorMap.primary} p-3 rounded-lg`}>
+      <div className="flex items-center justify-between mb-3">
+        <div className={`${colorMap[color] || colorMap.primary} p-2.5 rounded-xl transition-transform group-hover:scale-110`}>
           <Icon className="h-5 w-5" />
         </div>
         {trend && (
           <span className="text-xs font-medium text-muted-foreground">{trend}</span>
         )}
       </div>
-      <p className="text-2xl font-bold font-display text-card-foreground">{value}</p>
-      <p className="text-sm text-muted-foreground mt-1">{title}</p>
+      <p className="text-3xl font-extrabold font-display text-card-foreground">{value}</p>
+      <p className="text-xs text-muted-foreground mt-1 font-medium">{title}</p>
     </motion.div>
   );
 };

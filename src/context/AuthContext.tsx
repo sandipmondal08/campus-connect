@@ -25,14 +25,11 @@ interface UserWithPassword extends User {
   password: string;
 }
 
-const MOCK_USERS: UserWithPassword[] = [
+const INITIAL_USERS: UserWithPassword[] = [
   { id: 'admin-1', name: 'Sandip Mondal', email: 'sandipmondal2506@gmail.com', role: 'admin', department: 'Administration', password: 'Sandip@123' },
   { id: 'team-1', name: 'Rajesh Kumar', email: 'rajesh@college.edu', role: 'team', department: 'Maintenance', password: 'Team@123' },
   { id: 'team-2', name: 'Priya Sharma', email: 'priya@college.edu', role: 'team', department: 'IT Support', password: 'Team@123' },
   { id: 'team-3', name: 'Suresh Patel', email: 'suresh@college.edu', role: 'team', department: 'Hostel Management', password: 'Team@123' },
-  { id: 'user-1', name: 'Amit Singh', email: 'amit@student.edu', role: 'student', department: 'Computer Science', hostel: 'Block A', password: 'Student@123' },
-  { id: 'user-2', name: 'Dr. Meena Gupta', email: 'meena@faculty.edu', role: 'faculty', department: 'Electronics', password: 'Faculty@123' },
-  { id: 'user-3', name: 'Riya Verma', email: 'riya@student.edu', role: 'student', department: 'Mechanical', hostel: 'Block B', password: 'Student@123' },
 ];
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -45,7 +42,7 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<UserWithPassword[]>(MOCK_USERS);
+  const [users, setUsers] = useState<UserWithPassword[]>(INITIAL_USERS);
 
   const login = useCallback((email: string, password: string) => {
     const found = users.find((u) => u.email === email && u.password === password && !u.blocked);
