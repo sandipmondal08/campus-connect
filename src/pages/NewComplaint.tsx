@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useComplaints } from '@/context/ComplaintContext';
@@ -10,12 +10,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SUBCATEGORIES, ComplaintCategory } from '@/types';
 import { toast } from 'sonner';
+import { Upload, X } from 'lucide-react';
 
 const NewComplaint = () => {
   const { user } = useAuth();
   const { addComplaint } = useComplaints();
   const navigate = useNavigate();
   const [form, setForm] = useState({ title: '', description: '', category: '' as ComplaintCategory | '', subcategory: '', location: '' });
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const subcats = form.category ? SUBCATEGORIES[form.category as ComplaintCategory] : [];
 
