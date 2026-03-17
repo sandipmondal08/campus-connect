@@ -22,8 +22,8 @@ const LandingPage = () => {
             <FileText className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="font-display font-bold text-foreground">CCMS</h1>
-            <p className="text-[10px] text-muted-foreground">College Complaint System</p>
+            <h1 className="font-display font-bold text-foreground">CMS</h1>
+            <p className="text-[10px] text-muted-foreground">Complaint Management System</p>
           </div>
         </div>
         <div className="flex gap-3">
