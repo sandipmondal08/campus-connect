@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { User, UserRole } from '@/types';
 
 interface AuthContextType {
@@ -32,6 +32,27 @@ const INITIAL_USERS: UserWithPassword[] = [
   { id: 'team-3', name: 'Suresh Patel', email: 'suresh@college.edu', role: 'team', department: 'Hostel Management', password: 'Team@123' },
 ];
 
+const STORAGE_KEYS = {
+  users: 'cms_users',
+  currentUser: 'cms_current_user',
+};
+
+function loadUsers(): UserWithPassword[] {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEYS.users);
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  return INITIAL_USERS;
+}
+
+function loadCurrentUser(): User | null {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEYS.currentUser);
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  return null;
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
@@ -41,8 +62,17 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<UserWithPassword[]>(INITIAL_USERS);
+  const [user, setUser] = useState<User | null>(loadCurrentUser);
+  const [users, setUsers] = useState<UserWithPassword[]>(loadUsers);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
+  }, [users]);
+
+  useEffect(() => {
+    if (user) localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(user));
+    else localStorage.removeItem(STORAGE_KEYS.currentUser);
+  }, [user]);
 
   const login = useCallback((email: string, password: string) => {
     const found = users.find((u) => u.email === email && u.password === password && !u.blocked);
