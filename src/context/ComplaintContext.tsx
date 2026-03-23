@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { Complaint, ComplaintStatus, ComplaintCategory, Team } from '@/types';
 
 interface ComplaintContextType {
@@ -18,6 +18,27 @@ const INITIAL_TEAMS: Team[] = [
   { id: 'team-3', name: 'Hostel Management', members: ['Suresh Patel'], categoryAssigned: 'hostel' },
 ];
 
+const STORAGE_KEYS = {
+  complaints: 'cms_complaints',
+  teams: 'cms_teams',
+};
+
+function loadComplaints(): Complaint[] {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEYS.complaints);
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  return [];
+}
+
+function loadTeams(): Team[] {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEYS.teams);
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  return INITIAL_TEAMS;
+}
+
 const ComplaintContext = createContext<ComplaintContextType | null>(null);
 
 export const useComplaints = () => {
@@ -27,8 +48,16 @@ export const useComplaints = () => {
 };
 
 export const ComplaintProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [complaints, setComplaints] = useState<Complaint[]>([]);
-  const [teams, setTeams] = useState<Team[]>(INITIAL_TEAMS);
+  const [complaints, setComplaints] = useState<Complaint[]>(loadComplaints);
+  const [teams, setTeams] = useState<Team[]>(loadTeams);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.complaints, JSON.stringify(complaints));
+  }, [complaints]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.teams, JSON.stringify(teams));
+  }, [teams]);
 
   const addComplaint = useCallback((c: Omit<Complaint, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'timeline'>) => {
     const now = new Date().toISOString();
